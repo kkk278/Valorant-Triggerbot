@@ -6,5 +6,5 @@ Valorant trigger bot
 - First open the console then run the code with `py main.py`
 
 #Controls
-Active: f12
-Change gun: f(1 - 8)
+- Active: f12
+- Change gun: f(1 - 8)
