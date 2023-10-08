@@ -19,7 +19,6 @@ GRABZONE_KEY_UP = "ctrl + up"
 GRABZONE_KEY_DOWN = "ctrl + down"
 mods = ["SHERIFF", "SPECTRE", "GUARDIAN/SHOTGUN", "VANDAL/PHANTOM", "MARSHAL FASTSCOPE", "OPERATOR FASTSCOPE", "MARSHAL/OPERATOR SCOPE", "ODIN"]
 
-# Mapping of key combinations to mode values
 mode_key_map = {
     "f1": 0,
     "f2": 1,
@@ -29,7 +28,6 @@ mode_key_map = {
     "f6": 5,
     "f7": 6,
     "f8": 7
-
 }
 
 pyautogui.FAILSAFE = False
@@ -204,7 +202,6 @@ if __name__ == "__main__":
             while keyboard.is_pressed(TRIGGER_KEY):
                 pass
 
-        # Listen for mode change key combinations
         for key_combination, new_mode in mode_key_map.items():
             if keyboard.is_pressed(key_combination):
                 bot.mode = new_mode
