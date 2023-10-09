@@ -151,3 +151,4 @@ while True:
 
     if bot.toggled:
         bot.scan()
+        bot.click()
