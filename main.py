@@ -6,7 +6,8 @@ import winsound
 import os
 import mss
 from colorama import Fore, Style, init
-import PIL.ImageGrab 
+import PIL.ImageGrab
+import threading
 
 S_HEIGHT, S_WIDTH = (PIL.ImageGrab.grab().size)
 PURPLE_COLOR = (250, 100, 250)
@@ -46,7 +47,6 @@ class TriggerBot:
             time.sleep(SHOOTING_TIMES[self.mode])
             ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)
             keyboard.release('w+a+s+d')
-            
         else:
             while True:
                 if keyboard.is_pressed('ctrl'):
@@ -79,7 +79,6 @@ class TriggerBot:
     def scan(self):
         start_time = time.time()
         pmap = self.grab()
-        
         try:
             for x in range(0, GRABZONE * 2):
                 for y in range(0, GRABZONE * 2):
@@ -92,7 +91,7 @@ class TriggerBot:
             if self.mode < len(DELAY_TIMES):
                 time.sleep(0.5)
             else:
-                time.sleep(0.5)  
+                time.sleep(0.5)
 
 def print_banner(bot):
     os.system("cls")
@@ -108,47 +107,11 @@ def print_banner(bot):
     print("Delay      :", Fore.CYAN + str(bot.last_reac) + Style.RESET_ALL + " ms (" + str((bot.last_reac) / (GRABZONE * GRABZONE)) + "ms/pixel)")
 
 bot = TriggerBot()
-print_banner(bot)
 
-while True:
-    if keyboard.is_pressed(SWITCH_KEY):
-        bot.switch()
-        winsound.Beep(200, 200)
-        print_banner(bot)
-        while keyboard.is_pressed(SWITCH_KEY):
-            pass
-    elif keyboard.is_pressed(GRABZONE_KEY_UP):
-        GRABZONE += 5
-        print_banner(bot)
-        winsound.Beep(400, 200)
-        while keyboard.is_pressed(GRABZONE_KEY_UP):
-            pass
-    elif keyboard.is_pressed(GRABZONE_KEY_DOWN):
-        GRABZONE -= 5
-        print_banner(bot)
-        winsound.Beep(300, 200)
-        while keyboard.is_pressed(GRABZONE_KEY_DOWN):
-            pass
-    elif keyboard.is_pressed(TRIGGER_KEY):
-        bot.toggle()
-        print_banner(bot)
+def bot_thread():
+    print_banner(bot)
+    while True:
         if bot.toggled:
-            winsound.Beep(440, 75)
-            winsound.Beep(700, 100)
-        else:
-            winsound.Beep(440, 75)
-            winsound.Beep(200, 100)
-        while keyboard.is_pressed(TRIGGER_KEY):
-            pass
-    else:
-        for key_combination, new_mode in zip(MODE_KEYS, range(len(MODES))):
-            if keyboard.is_pressed(key_combination):
-                bot.mode = new_mode
-                winsound.Beep(200, 200)
-                print_banner(bot)
-                while keyboard.is_pressed(key_combination):
-                    pass
+            bot.scan()
+        time.sleep(0.001)
 
-    if bot.toggled:
-        bot.scan()
-        bot.click()
