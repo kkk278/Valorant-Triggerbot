@@ -19,6 +19,7 @@ GRABZONE_KEY_DOWN = "ctrl + down"
 MODE_KEYS = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8"]
 MODES = ["SHERIFF", "SPECTRE", "GUARDIAN/SHOTGUN", "VANDAL/PHANTOM", "MARSHAL FASTSCOPE", "OPERATOR FASTSCOPE", "MARSHAL/OPERATOR SCOPE", "ODIN(Ctrl to shoot"]
 DELAY_TIMES = [0.09, 0.025, 0.0995, 0.045, 0.0995, 0.0995, 0]
+SHOOTING_TIMES = [0, 0, 0, 0, 0, 0, 0]
 
 class FoundEnemy(Exception):
     pass
@@ -38,17 +39,11 @@ class TriggerBot:
         self.mode = (self.mode + 1) % len(MODES)
 
     def click(self):
-        if self.mode == 3:
+        if self.mode < len(DELAY_TIMES):
             keyboard.press('w+a+s+d')
             time.sleep(DELAY_TIMES[self.mode])
             ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)
-            time.sleep(0.25)
-            ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)
-            keyboard.release('w+a+s+d')
-        elif self.mode < len(DELAY_TIMES):
-            keyboard.press('w+a+s+d')
-            time.sleep(DELAY_TIMES[self.mode])
-            ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)
+            time.sleep(SHOOTING_TIMES[self.mode])
             ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)
             keyboard.release('w+a+s+d')
             
