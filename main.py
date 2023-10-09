@@ -38,12 +38,20 @@ class TriggerBot:
         self.mode = (self.mode + 1) % len(MODES)
 
     def click(self):
-        if self.mode < len(DELAY_TIMES):
+        if self.mode == 3:
+            keyboard.press('w+a+s+d')
+            time.sleep(DELAY_TIMES[self.mode])
+            ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)
+            time.sleep(0.25)
+            ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)
+            keyboard.release('w+a+s+d')
+        elif self.mode < len(DELAY_TIMES):
             keyboard.press('w+a+s+d')
             time.sleep(DELAY_TIMES[self.mode])
             ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)
             ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)
             keyboard.release('w+a+s+d')
+            
         else:
             while True:
                 if keyboard.is_pressed('ctrl'):
