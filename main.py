@@ -19,8 +19,8 @@ GRABZONE_KEY_UP = "ctrl + up"
 GRABZONE_KEY_DOWN = "ctrl + down"
 MODE_KEYS = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8"]
 MODES = ["SHERIFF", "SPECTRE", "GUARDIAN/SHOTGUN", "VANDAL/PHANTOM", "MARSHAL FASTSCOPE", "OPERATOR FASTSCOPE", "MARSHAL/OPERATOR SCOPE", "ODIN(Ctrl to shoot"]
-DELAY_TIMES = [0.09, 0.025, 0.0995, 0.045, 0.0995, 0.0995, 0]
-SHOOTING_TIMES = [0, 0, 0, 0, 0, 0, 0]
+DELAY_TIMES = [0.09, 0.025, 0.0995, 0.048, 0.0995, 0.0995, 0]
+SHOOTING_TIMES = [0, 0, 0, 0.25, 0, 0, 0]
 
 class FoundEnemy(Exception):
     pass
@@ -95,7 +95,7 @@ class TriggerBot:
 
 def print_banner(bot):
     os.system("cls")
-    print(Style.BRIGHT + Fore.CYAN + "kk278" + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.RED + "kk278" + Style.RESET_ALL)
     print("===== Controls =====")
     print("Active     :", Fore.YELLOW + TRIGGER_KEY + Style.RESET_ALL)
     print("Change gun f(1 - 8) ", Fore.YELLOW + Style.RESET_ALL)
@@ -113,5 +113,49 @@ def bot_thread():
     while True:
         if bot.toggled:
             bot.scan()
-        time.sleep(0.001)
+        time.sleep(0.001)  
 
+bot_thread = threading.Thread(target=bot_thread)
+bot_thread.daemon = True  
+bot_thread.start()
+
+while True:
+    if keyboard.is_pressed(SWITCH_KEY):
+        bot.switch()
+        winsound.Beep(200, 200)
+        print_banner(bot)
+        while keyboard.is_pressed(SWITCH_KEY):
+            pass
+    elif keyboard.is_pressed(GRABZONE_KEY_UP):
+        GRABZONE += 5
+        print_banner(bot)
+        winsound.Beep(400, 200)
+        while keyboard.is_pressed(GRABZONE_KEY_UP):
+            pass
+    elif keyboard.is_pressed(GRABZONE_KEY_DOWN):
+        GRABZONE -= 5
+        print_banner(bot)
+        winsound.Beep(300, 200)
+        while keyboard.is_pressed(GRABZONE_KEY_DOWN):
+            pass
+    elif keyboard.is_pressed(TRIGGER_KEY):
+        bot.toggle()
+        print_banner(bot)
+        if bot.toggled:
+            winsound.Beep(440, 75)
+            winsound.Beep(700, 100)
+        else:
+            winsound.Beep(440, 75)
+            winsound.Beep(200, 100)
+        while keyboard.is_pressed(TRIGGER_KEY):
+            pass
+    else:
+        for key_combination, new_mode in zip(MODE_KEYS, range(len(MODES))):
+            if keyboard.is_pressed(key_combination):
+                bot.mode = new_mode
+                winsound.Beep(200, 200)
+                print_banner(bot)
+                while keyboard.is_pressed(key_combination):
+                    pass
+
+    time.sleep(0.1)  
