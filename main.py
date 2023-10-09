@@ -89,20 +89,20 @@ class TriggerBot:
             if self.mode < len(DELAY_TIMES):
                 time.sleep(0.5)
             else:
-                time.sleep(0.5)  # Adjust this as needed
+                time.sleep(0.5)  
 
 def print_banner(bot):
     os.system("cls")
-    print(Style.BRIGHT + Fore.CYAN + "thienkhoilewlew" + Style.RESET_ALL)
+    print(Style.BRIGHT + Fore.CYAN + "kk278" + Style.RESET_ALL)
     print("===== Controls =====")
-    print("Bật     :", Fore.YELLOW + TRIGGER_KEY + Style.RESET_ALL)
-    print("Đổi súng: f(1 - 8) ", Fore.YELLOW + Style.RESET_ALL)
-    print("Range   :", Fore.YELLOW + GRABZONE_KEY_UP + "/" + GRABZONE_KEY_DOWN + Style.RESET_ALL)
+    print("Active     :", Fore.YELLOW + TRIGGER_KEY + Style.RESET_ALL)
+    print("Change gun f(1 - 8) ", Fore.YELLOW + Style.RESET_ALL)
+    print("Range      :", Fore.YELLOW + GRABZONE_KEY_UP + "/" + GRABZONE_KEY_DOWN + Style.RESET_ALL)
     print("====================")
-    print("Súng    :", Fore.CYAN + MODES[bot.mode] + Style.RESET_ALL)
-    print("Range   :", Fore.CYAN + str(GRABZONE) + "x" + str(GRABZONE) + Style.RESET_ALL)
-    print("Auto bắn:", (Fore.GREEN if bot.toggled else Fore.RED) + ("Bật" if bot.toggled else "Tắt") + Style.RESET_ALL)
-    print("Độ trễ  :", Fore.CYAN + str(bot.last_reac) + Style.RESET_ALL + " ms (" + str((bot.last_reac) / (GRABZONE * GRABZONE)) + "ms/pix)")
+    print("Gun        :", Fore.CYAN + MODES[bot.mode] + Style.RESET_ALL)
+    print("Range      :", Fore.CYAN + str(GRABZONE) + "x" + str(GRABZONE) + Style.RESET_ALL)
+    print("Trigger bot:", (Fore.GREEN if bot.toggled else Fore.RED) + ("On" if bot.toggled else "Off") + Style.RESET_ALL)
+    print("Delay      :", Fore.CYAN + str(bot.last_reac) + Style.RESET_ALL + " ms (" + str((bot.last_reac) / (GRABZONE * GRABZONE)) + "ms/pixel)")
 
 bot = TriggerBot()
 print_banner(bot)
