@@ -1,5 +1,5 @@
 # Valorant-Triggerbot
-Valorant trigger bot
+The triggerbot for Valorant
 
 # Before you start
 - Install libraries with `pip install -U -r requirements.txt`
