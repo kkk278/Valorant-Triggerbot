@@ -1,8 +1,10 @@
 # Valorant-Triggerbot
 The triggerbot for Valorant
 
+# Requirement
+- Latest Python version [here](https://www.python.org/downloads/)
+  
 # Installation
-- First install the latest Python version from [here](https://www.python.org/downloads/)
 - Open the console then install libraries with `pip install -U -r requirements.txt`
 - Run the code with `python main.py`
   
